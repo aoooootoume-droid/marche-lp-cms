@@ -2,6 +2,7 @@
 
 import { SiteContentProvider, useSiteContentContext } from "@/context/SiteContentContext";
 import { ReservationProvider } from "@/context/ReservationContext";
+import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { News } from "@/components/News";
 import { Menu } from "@/components/Menu";
@@ -23,6 +24,7 @@ function PageContent() {
 
   return (
     <main>
+      <Header />
       <Hero />
       <News />
       <Menu />
