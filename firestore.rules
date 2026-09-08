@@ -1,0 +1,24 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // サイト本体のコンテンツ（draft / published）
+    // 読み取りは誰でも可能（一般客が published を見るため）。
+    // 書き込みはログイン済みの管理者（店主）のみ許可する。
+    match /site/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // 取り置き予約
+    // 作成（送信）は誰でも可能。ただし他人の予約の閲覧・更新・削除は
+    // ログイン済みの管理者のみに限定する。
+    match /reservations/{reservationId} {
+      allow create: if request.resource.data.keys().hasAll(
+        ['name', 'contact', 'desiredDate', 'desiredTime', 'items', 'status']
+      );
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}

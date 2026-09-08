@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+body {
+  background-color: #bdc6ca; /* base: メイン背景（7割） */
+  color: #32495f; /* deep: 基本テキスト */
+}
