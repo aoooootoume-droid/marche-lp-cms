@@ -14,10 +14,8 @@ export const defaultSiteContent: SiteContent = {
     story:
       "週末だけの小さな焼き菓子屋です。素材にこだわり、マルシェやイベントで一つひとつ手渡しできる距離感を大切にしています。",
     instagramEmbedUrl: "",
-    snsLinks: [
-      { label: "Instagram", url: "https://www.instagram.com/" },
-      { label: "X (Twitter)", url: "https://x.com/" },
-    ],
+    // Instagramのリンクは hero.instagramUrl で一元管理するため、ここには含めない。
+    snsLinks: [{ label: "X (Twitter)", url: "https://x.com/" }],
     accessNote: "出店場所・時間は「お知らせ」セクションのスケジュールをご確認ください。",
   },
   menu: [

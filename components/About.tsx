@@ -7,10 +7,16 @@ import type { SiteContent } from "@/types/content";
 export function About() {
   const { content, editMode, saveDraft } = useSiteContentContext();
   if (!content) return null;
-  const { about } = content;
+  const { about, hero } = content;
 
   function updateAbout(patch: Partial<SiteContent["about"]>) {
     saveDraft((draft) => ({ ...draft, about: { ...draft.about, ...patch } }));
+  }
+
+  // Instagramリンクはヒーローセクションと共通の1箇所（hero.instagramUrl）で管理し、
+  // どちらから編集しても同じ値が反映されるようにする。
+  function updateInstagramUrl(url: string) {
+    saveDraft((draft) => ({ ...draft, hero: { ...draft.hero, instagramUrl: url } }));
   }
 
   function updateSnsLink(index: number, patch: Partial<{ label: string; url: string }>) {
@@ -44,7 +50,28 @@ export function About() {
           />
 
           <div className="mt-6 space-y-2">
-            {about.snsLinks.map((link, i) => (
+            <div className="flex items-center gap-2">
+              <a
+                href={hero.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-deep px-4 py-2 text-sm font-semibold text-deep hover:bg-deep hover:text-cream transition-colors"
+              >
+                Instagram
+              </a>
+              {editMode && (
+                <EditableText
+                  value={hero.instagramUrl}
+                  onSave={updateInstagramUrl}
+                  className="text-xs text-deep/60"
+                  label="InstagramのURLを編集（ヒーローセクションと共通）"
+                />
+              )}
+            </div>
+            {about.snsLinks
+              .map((link, i) => ({ link, i }))
+              .filter(({ link }) => link.label.trim().toLowerCase() !== "instagram")
+              .map(({ link, i }) => (
               <div key={i} className="flex items-center gap-2">
                 <a
                   href={link.url}
